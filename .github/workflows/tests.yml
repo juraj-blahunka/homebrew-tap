@@ -1,4 +1,4 @@
-# Audits, installs and tests every formula, so a wrong url or sha256 fails here instead of on a user's machine.
+# Installs, tests and audits every formula, so a wrong url or sha256 fails here instead of on a user's machine.
 name: tests
 
 on:
@@ -18,18 +18,24 @@ jobs:
     steps:
       - uses: Homebrew/actions/setup-homebrew@main
 
+      # setup-homebrew trusts the tap it checks out, which a user's machine never does.
+      - name: Untrust this tap
+        run: brew untrust --tap juraj-blahunka/tap
+
+      # Exactly what the README tells users to run, on a tap nobody has trusted:
+      # installing by full name must trust the formula on its own.
+      - name: Install and test like a user
+        run: |
+          shopt -s nullglob
+          for formula in "$(brew --repository juraj-blahunka/tap)"/Formula/*.rb; do
+            name="juraj-blahunka/tap/$(basename "$formula" .rb)"
+            brew install "$name"
+            brew test "$name"
+          done
+
       # Homebrew refuses to load formulae from an untrusted tap, even to audit them.
       - name: Trust this tap
         run: brew trust --tap juraj-blahunka/tap
 
       - name: Audit
         run: brew audit --strict --online --tap juraj-blahunka/tap
-
-      - name: Install and test
-        run: |
-          shopt -s nullglob
-          for formula in "$(brew --repository juraj-blahunka/tap)"/Formula/*.rb; do
-            name="juraj-blahunka/tap/$(basename "$formula" .rb)"
-            brew install --formula "$name"
-            brew test "$name"
-          done
