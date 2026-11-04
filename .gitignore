@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+._*
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Ruby tooling used by `brew style`
+.bundle/
+vendor/
