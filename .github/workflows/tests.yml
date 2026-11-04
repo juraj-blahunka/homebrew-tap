@@ -1,0 +1,31 @@
+# Audits, installs and tests every formula, so a wrong url or sha256 fails here instead of on a user's machine.
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    # The oldest and newest macOS that GitHub hosts; both are Apple silicon, which the formulae require.
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15, macos-26]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: Homebrew/actions/setup-homebrew@main
+
+      - name: Audit
+        run: brew audit --strict --online --tap juraj-blahunka/tap
+
+      - name: Install and test
+        run: |
+          shopt -s nullglob
+          for formula in "$(brew --repository juraj-blahunka/tap)"/Formula/*.rb; do
+            name="juraj-blahunka/tap/$(basename "$formula" .rb)"
+            brew install --formula "$name"
+            brew test "$name"
+          done
