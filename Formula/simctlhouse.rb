@@ -1,8 +1,8 @@
 class Simctlhouse < Formula
   desc "Lease iOS simulators to parallel coding agents"
   homepage "https://github.com/juraj-blahunka/simctlhouse"
-  url "https://github.com/juraj-blahunka/simctlhouse/releases/download/v0.1.0/simctlhouse-0.1.0-macos.tar.gz"
-  sha256 "b5ca375fd8dd1f13b90ca5cdb9fcddb0062b4e6296608878988924813afdca6e"
+  url "https://github.com/juraj-blahunka/simctlhouse/releases/download/v0.1.1/simctlhouse-0.1.1-macos.tar.gz"
+  sha256 "5be110842cd7915bbe413dfbaf3cd5aeae5a1d29b859a7e204017df66125419f"
   license "MIT"
 
   depends_on arch: :arm64
