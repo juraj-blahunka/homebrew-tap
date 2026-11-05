@@ -1,8 +1,8 @@
 class Simctlhouse < Formula
   desc "Lease iOS simulators to parallel coding agents"
   homepage "https://github.com/juraj-blahunka/simctlhouse"
-  url "https://github.com/juraj-blahunka/simctlhouse/releases/download/v0.1.1/simctlhouse-0.1.1-macos.tar.gz"
-  sha256 "5be110842cd7915bbe413dfbaf3cd5aeae5a1d29b859a7e204017df66125419f"
+  url "https://github.com/juraj-blahunka/simctlhouse/releases/download/v0.2.0/simctlhouse-0.2.0-macos.tar.gz"
+  sha256 "478bd8a1729828662fc03796a1628c1fad46c21d83c61b4c09c217a3fd02b876"
   license "MIT"
 
   depends_on arch: :arm64
@@ -18,8 +18,8 @@ class Simctlhouse < Formula
       To make the simctlhouse skill available to your coding agents, run once:
         simctlhouse skill install
       Upgrades update the skill automatically.
-      Before uninstalling, run:
-        simctlhouse skill uninstall
+      Before uninstalling, remove the pool's simulators, the daemon and the skill links:
+        simctlhouse uninstall
     EOS
   end
 
